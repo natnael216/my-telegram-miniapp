@@ -1,20 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Interactive Mini App</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <title>Newton's Laws</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .topic-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .content {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      background-color: #00bfff;
+      color: black;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to My Mini App!</h1>
-        <p>This is your interactive space within Telegram.</p>
-        <button id="actionButton">Perform Action</button>
-        <div id="messageDisplay" class="message"></div>
-    </div>
+  <div class="topic-title">🧠 Newton's First Law</div>
+  <div class="content">
+    <p>
+      An object in motion stays in motion, and an object at rest stays at rest — unless acted on by a force.
+    </p>
+    <p style="font-size: 13px;">
+      Example: A book stays still on a table until you push it.
+    </p>
+  </div>
 
-    <script src="script.js"></script>
+  <button class="button" onclick="showSecondTopic()">Next Topic ➡️</button>
+
+  <div id="second-topic" style="display: none;">
+    <div class="topic-title">💥 Newton's Second Law</div>
+    <div class="content">
+      <p>Force = mass × acceleration (F = ma)</p>
+      <p style="font-size: 13px;">Example: Heavier objects need more force to move.</p>
+    </div>
+  </div>
+
+  <script>
+    function showSecondTopic() {
+      document.getElementById('second-topic').style.display = 'block';
+    }
+  </script>
 </body>
 </html>

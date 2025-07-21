@@ -1,20 +1,43 @@
-// This code runs once the entire HTML document is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Get references to our HTML elements by their IDs
-    const actionButton = document.getElementById('actionButton');
-    const messageDisplay = document.getElementById('messageDisplay');
+// Ensure the Telegram Web App object is available
+if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
 
-    // Check if the button exists before trying to add an event listener
-    if (actionButton) {
-        // Add a click event listener to the button
-        actionButton.addEventListener('click', () => {
-            // When the button is clicked, update the message display
-            messageDisplay.textContent = 'Action performed! This is interactive!';
-            // You could add more complex logic here, like making API calls,
-            // or interacting with the Telegram Web App SDK (added in Step 4 of the main guide).
-            console.log('Button was clicked!');
-        });
+    // Expand the mini app to full screen as soon as it loads (optional, but common)
+    tg.expand();
+
+    // Set the app's background color to match Telegram's theme (optional)
+    // You can also get Telegram's current theme colors via tg.themeParams
+    // tg.setBackgroundColor(tg.themeParams.bg_color || '#f0f0f0');
+
+    // Get a reference to the button
+    const showAlertButton = document.getElementById('show-alert-button');
+    const userInfoParagraph = document.getElementById('user-info');
+
+    // Add an event listener to the button
+    showAlertButton.addEventListener('click', () => {
+        // Use a Telegram Web App SDK method to show an alert
+        tg.showAlert('Hello from your Telegram Mini App!');
+    });
+
+    // Display user information from Telegram (if available)
+    // The initData contains user information, launch parameters, etc.
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const user = tg.initDataUnsafe.user;
+        userInfoParagraph.innerText = `Hello, ${user.first_name || 'User'}! Your ID is: ${user.id}`;
     } else {
-        console.error('Error: Button with ID "actionButton" not found.');
+        userInfoParagraph.innerText = 'Could not retrieve user info.';
     }
-});
+
+    // You can also use MainButton for a persistent button at the bottom
+    // tg.MainButton.setText('Custom Main Button');
+    // tg.MainButton.show();
+    // tg.MainButton.onClick(() => {
+    //     tg.sendData('Custom button clicked!'); // Send data back to your bot
+    // });
+
+} else {
+    // Fallback for when the app is not running inside Telegram
+    console.warn('Telegram Web App SDK not found. Running in a standard browser environment.');
+    document.getElementById('user-info').innerText = 'This app is designed for Telegram.';
+    // You might want to disable Telegram-specific features or show a different UI here
+}
